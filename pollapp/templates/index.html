@@ -1,1 +1,29 @@
-<p> INSTAPOLL</p>
+{% extends 'base.html' %}
+{% load static%}
+<!-- Styles block -->
+{% block styles %}
+
+    {{block.super}}
+      <link rel="stylesheet" href="{% static 'css/index.css'%}">
+
+{% endblock %}
+
+ {% block content %}
+
+<div class="col--md-4 col-md-offset-3">
+
+
+ <p> INSTAPOLL</p>
+ <a href=" {% url 'question'%}">
+   <button type="button"  class="btn btn-primary btn-md  pull-center">Create Poll</button>
+ </a>
+
+ {% if questions %}
+   {% for question in questions %}
+       <p>{{question.question_title}}</p>
+       <p>{{question.instructions}}</p>
+       <p>{{question.date_closing | timesince}}</p>
+    {%endfor%}
+  {% endif%}
+{% endblock %}
+</div>

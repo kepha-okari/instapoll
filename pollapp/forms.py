@@ -20,10 +20,10 @@ class QuestionForm(forms.ModelForm):
     '''
     class Meta:
         model = Question
-        fields = ['question_title']
+        fields = ['question_title', 'instructions','date_closing']
 
 
-#*************************************************************************************************************
+#************************************************** Enter A Choice **********************************************
 
 
 class ChoiceForm(forms.ModelForm):
@@ -35,7 +35,7 @@ class ChoiceForm(forms.ModelForm):
         fields = ['choice_text']
 
 
-#*************************************************************************************************************
+#************************************* SET UP A PROFILE **********************************************************
 
 
 class ProfileForm(forms.ModelForm):
@@ -45,3 +45,14 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['photo','email','phone']
+
+
+#***********************************************************ACTUAL VOTING****************************************
+
+class VoteForm(forms.ModelForm):
+    '''
+    Class to create a form for an authenticated user to vote
+    '''
+    class Meta:
+        model = Choice
+        fields = ['vote']

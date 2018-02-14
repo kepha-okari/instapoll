@@ -11,10 +11,16 @@ class Group (models.Model):
 
 class Question(models.Model):
     question_title = models.CharField(max_length=200)
+    instructions = models.CharField(max_length=400, blank=True,null=True)
     date_started = models.DateTimeField(auto_now_add=True, null=True)
-    date_closing = models.DateTimeField(auto_now_add=True,null=True)
+    date_closing = models.DateTimeField(null=True)
     group = models.ForeignKey(Group,null =True,blank=True, on_delete=models.CASCADE)
     vote_count = models.IntegerField(default=0)
+
+    @classmethod
+    def get_questions(cls):
+        questions = cls.objects.all()
+        return questions
 
 
 class Choice(models.Model):
