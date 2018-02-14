@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap3',
     'pollapp.apps.PollappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -85,10 +86,7 @@ DATABASES = {
         'USER': 'rkepha',
         'PASSWORD': 'KR',
     }
-    }
-
-
-
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
