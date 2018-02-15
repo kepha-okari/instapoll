@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static%}
+<!-- Styles block -->
+{% block styles %}
+
+    {{block.super}}
+      <link rel="stylesheet" href="{% static 'css/index.css'%}">
+
+{% endblock %}
+
+ {% block content %}
+
+ <p> INSTAPOLL</p>
+
+
+
+ {% if question %}
+
+   <div class=" col-md-4" style="margin:12px">
+     <p>{{question.question_title}}</p>
+     <p>{{question.instructions}}</p>
+     <p>{{question.date_closing | timesince}}</p><hr style="color:blue;">
+
+     {%if choices%}
+        {% for choice in choices %}
+        <p>{{choice.question.question_title}}</p>
+        <p>
+          <a href="{% url 'vote' choice.id %}">
+            <button type="button" class="btn btn-primary" name="button" width="20"> Vote {{choice.choice_text}}</button>
+          </a>
+
+        </p>
+
+        {%  endfor %}
+     {% endif %}
+     <a href=" {% url 'question'%}">
+       <button type="button" style="margin:5px"  class="btn btn-primary btn-md  pull-right">Vote not working</button>
+     </a>
+
+   </div>
+
+  {% endif%}
+{% endblock %}
+</div>

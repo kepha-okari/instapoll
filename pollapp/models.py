@@ -22,19 +22,41 @@ class Question(models.Model):
         questions = cls.objects.all()
         return questions
 
+    @classmethod
+    def get_specific_question(cls,question_id):
+        question = cls.objects.get(id=question_id)
+        return question
+
+
 
 class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
-    vote = models.IntegerField(default=0)
-    users = models.ForeignKey(User,null =True,blank=True,on_delete=models.CASCADE)
+    vote_cast = models.IntegerField(default=0)
+    user = models.ForeignKey(User,null =True,blank=True,on_delete=models.CASCADE)
     question = models.ForeignKey(Question,null =True,blank=True, on_delete=models.CASCADE)
 
+
+    @classmethod
+    def get_specific_choice(cls,choice_id):
+        choice = cls.objects.get(id=choice_id)
+        return choice
+
+
+    @classmethod
+    def get_question_choices(cls,question_id):
+        choices = cls.objects.filter(question=question_id)
+        return choices
 
 
 class Profile(models.Model):
     photo = models.ImageField(upload_to = 'profiles/', null=True,blank=True)
     email = models.EmailField(max_length=70,blank=True)
     phone = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Vote(models.Model):
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 

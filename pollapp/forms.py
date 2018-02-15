@@ -55,4 +55,4 @@ class VoteForm(forms.ModelForm):
     '''
     class Meta:
         model = Choice
-        fields = ['vote']
+        fields = ['vote_cast']

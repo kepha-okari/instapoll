@@ -9,8 +9,9 @@ urlpatterns = [
     url(r'^new/group/',views.create_group, name='newGroup'),
     url(r'^new/question/',views.create_question, name='question'),
     url(r'^view/questions/',views.view_questions, name='viewQuestion'),
-    url(r'^new/choice/',views.create_choice, name='choice'),
-    url(r'^vote',views.vote, name='vote'),
+    url(r'^cast/vote/(\d+)',views.cast_vote, name='castVote'),
+    url(r'^new/choice/(\d+)',views.create_choice, name='choice'),
+    url(r'^vote/(\d+)',views.vote, name='vote'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
 
 ]
