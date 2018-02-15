@@ -120,6 +120,8 @@ def vote(request,choice_id):
 
     question = Question.get_specific_question(chosen.question.id)
 
+
+
     voted = Vote(choice=chosen , question=question , user=current_user)
     voted.save()
 
@@ -137,14 +139,16 @@ def cast_vote(request,question_id):
     '''
     current_user = request.user
 
+
     #fetch specific question
     question = Question.get_specific_question(question_id)
 
     #fetch all the choices given for a given question
     choices = Choice.get_question_choices(question_id)
 
+    validate_vote = len(Vote.objects.filter(question=question_id, user=current_user))
 
-    return render(request, 'vote-question.html', {"question":question,"choices":choices})
+    return render(request, 'vote-question.html', {"question":question,"choices":choices,"validate_vote":validate_vote})
 
 
 #**************************************************************viewing details***************************************************************
@@ -179,11 +183,14 @@ def view_results(request,question_id):
     choices = Choice.get_question_choices(question_id)
     options =len(choices)
     votes_for = {}
+    percentages = {}
+
     #count votes each choice has
     for answer in choices:
         vote_count = len(Vote.objects.filter(question=question_id,choice=answer.id))
         votes_for[answer.id] = vote_count
-        score = voters
+
+        percentages[answer.id] = (vote_count/voters)*100
 
 
-    return render(request, 'results.html', {"poll":poll,"voters":voters,"options":options,"choices":choices,"votes_for":votes_for})
+    return render(request, 'results.html', {"percentages":percentages,"poll":poll,"voters":voters,"options":options,"choices":choices,"votes_for":votes_for})

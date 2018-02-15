@@ -28,29 +28,48 @@
         <p>{{ votes_for | get_item:choice.id }} out of {{voters}} casted</p>
         <p>{{score}}</p>
         <hr>
-
-
-
       {% endfor %}
    </div>
 
-   {% for choice in choices %}
 
-     <div class="progress">
-       {{choice.choice_text}}
-       <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{{ percentages | get_item:choice.id }}%">
-         {{choice.choice_text}} {{ percentages | get_item:choice.id }}%
-       </div>
-     </div>
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
+
+<dl>
+  <dt>A title of the graph</dt>
+  <dd class="percentage">
+    <span class="text">
+      Data 1: 20%
+    </span>
+  </dd>
+  <dd class="percentage">
+    <span class="text">
+      Data 2: 50%
+    </span>
+  </dd>
+  <dd class="percentage">
+    <span class="text">
+      Data 3: 30%
+    </span>
+  </dd>
+</dl>
 
 
-
-   {% endfor %}
 
 
 
 <style media="screen">
 
+      .percentage:after {
+        content: "";
+        display: block;
+        background-color: #3d9970;
+      }
+      .percentage-20:after {
+        width: 20%;
+      }
+      .percentage-30:after {
+        width: 30%;
+      }
 
 </style>
 

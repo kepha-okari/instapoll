@@ -20,10 +20,16 @@
      <p>{{question.question_title}}</p>
      <p>{{question.instructions}}</p>
      <p>{{question.date_closing | timesince}}</p>
-
-     <a href=" {% url 'castVote' question.id %}">
-       <button type="button" style="margin:5px"  class="btn btn-primary btn-md  pull-right">Vote</button>
+      <p>{{validate_vote | length}}</p>
+     {%if validate_vote > 0 %}
+     <a href="">
+       <button type="button" style="margin:5px"  class="btn btn-danger btn-md  pull-right">Voted</button>
      </a>
+      {% else %}
+      <a href=" {% url 'castVote' question.id %}">
+        <button type="button" style="margin:5px"  class="btn btn-primary btn-md  pull-right">Vote</button>
+      </a>
+      {% endif %}
      <a href=" {% url 'choice' question.id%}">
        <button type="button" style="margin:5px" class="btn btn-primary btn-md  pull-right">Choice</button>
      </a>
