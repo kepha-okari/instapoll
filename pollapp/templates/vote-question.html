@@ -23,19 +23,19 @@
 
      {%if choices%}
         {% for choice in choices %}
-        <p>{{choice.question.question_title}}</p>
+
         <p>
           <a href="{% url 'vote' choice.id %}">
             <button type="button" class="btn btn-primary" name="button" width="20"> Vote {{choice.choice_text}}</button>
           </a>
-
         </p>
 
         {%  endfor %}
+        <hr>
+        <a href="{% url 'viewResults' question.id %}">
+          <button type="button" class="btn btn-success pull-right" name="button" width="20"> Poll Results</button>
+        </a>
      {% endif %}
-     <a href=" {% url 'question'%}">
-       <button type="button" style="margin:5px"  class="btn btn-primary btn-md  pull-right">Vote not working</button>
-     </a>
 
    </div>
 

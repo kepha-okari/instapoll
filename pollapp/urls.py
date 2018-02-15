@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^cast/vote/(\d+)',views.cast_vote, name='castVote'),
     url(r'^new/choice/(\d+)',views.create_choice, name='choice'),
     url(r'^vote/(\d+)',views.vote, name='vote'),
+    url(r'^results/(\d+)',views.view_results, name='viewResults'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
 
 ]

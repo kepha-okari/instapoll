@@ -91,7 +91,6 @@ def create_choice(request, question_id):
 # @login_required(login_url='/accounts/login')
 # def vote(request):
 #     '''
-#     View function to create and update the profile of the user
 #     '''
 #     current_user = request.user
 #
@@ -109,43 +108,46 @@ def create_choice(request, question_id):
 #         form = VoteForm()
 #     return render(request, 'vote.html', {"form":form})
 
+#vote for a question
 @login_required(login_url='/accounts/login')
 def vote(request,choice_id):
     '''
     View function to create and update the profile of the user
     '''
     current_user = request.user
-    chosen = Choice.get_specific_choice(choice_id)  
-    # chosen = Choice.objects.get(id=choice_id)
+
+    chosen = Choice.get_specific_choice(choice_id)
+
     question = Question.get_specific_question(chosen.question.id)
-    # question = Question.objects.get(id=chosen.question.id)
+
     voted = Vote(choice=chosen , question=question , user=current_user)
     voted.save()
 
-    # qsn_id= Question.objects.get(id=question_id)
-
-    return redirect(index)
-
+    # return redirect('view_results' id=question.id) #return the results
+    return redirect('home')
 
 
 
+
+#display choices of a question
 @login_required(login_url='/accounts/login')
 def cast_vote(request,question_id):
     '''
-    View function to create and update the profile of the user
+    View function to display choices of a question
     '''
     current_user = request.user
 
-    # question= Question.objects.get(id=question_id)
-    question= Question.get_specific_question(question_id)
-    choices= Choice.get_question_choices(question_id)
+    #fetch specific question
+    question = Question.get_specific_question(question_id)
+
+    #fetch all the choices given for a given question
+    choices = Choice.get_question_choices(question_id)
 
 
     return render(request, 'vote-question.html', {"question":question,"choices":choices})
 
 
-#**************************************************************viewin details***************************************************************
-
+#**************************************************************viewing details***************************************************************
 
 def view_questions(request):
     # images = Image.get_images()
@@ -156,3 +158,32 @@ def view_questions(request):
 
 
     return render(request, 'view-questions.html', {"title": title, "questions": questions})
+
+
+#*******************************************************************check Results*****************************************************************
+
+@login_required(login_url='/accounts/login')
+def view_results(request,question_id):
+    '''
+    View function to create and update the profile of the user
+    '''
+    current_user = request.user
+
+    poll = Question.get_specific_question(question_id)
+
+    # Collect all votes casted
+    question= Vote.objects.filter(question=question_id)
+    voters = len(question)
+
+    # fetch all possible choices for a question
+    choices = Choice.get_question_choices(question_id)
+    options =len(choices)
+    votes_for = {}
+    #count votes each choice has
+    for answer in choices:
+        vote_count = len(Vote.objects.filter(question=question_id,choice=answer.id))
+        votes_for[answer.id] = vote_count
+        score = voters
+
+
+    return render(request, 'results.html', {"poll":poll,"voters":voters,"options":options,"choices":choices,"votes_for":votes_for})

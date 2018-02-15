@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static%}
+{% load app_filters %}
+<!-- Styles block -->
+{% block styles %}
+
+    {{block.super}}
+      <link rel="stylesheet" href="{% static 'css/index.css'%}">
+
+{% endblock %}
+
+ {% block content %}
+
+ <p> INSTAPOLL</p>
+
+
+
+   <div class=" col-md-4" style="margin:12px">
+     <p>{{poll.question_title}}</p>
+
+     <p>{{choices | length}}  choices</p>
+     <p>{{voters}} casted</p>
+     <h3>{{options}} choices available</h3>
+
+      {% for choice in choices %}
+        <p>choice {{choice.id}} | question {{poll.id}}</p>
+        <p>| {{choice.choice_text}} |</p>
+        <p>votes {{ votes_for | get_item:choice.id }}</p>
+        <hr>
+      {% endfor %}
+   </div>
+
+{% endblock %}
+</div>
